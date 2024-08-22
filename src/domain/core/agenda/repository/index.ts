@@ -1,1 +1,1 @@
-export * as crud from './crud.repository';
+export * as mongodb from './mongodb';

@@ -1,2 +1,1 @@
-export * as crud from './crud.repository';
-export * from './obtener-lista.repository';
+export * as mongodb from './mongodb';

@@ -4,7 +4,7 @@ import {
   BuscarAgendamientoDTO,
   ActualizarAgendamientoDTO,
 } from "../dto";
-import * as repository from "../repository";
+import * as repository from '../repository/mongodb';
 import { EliminarAgendamientoDTO } from "../dto";
 
 export const crear = async (

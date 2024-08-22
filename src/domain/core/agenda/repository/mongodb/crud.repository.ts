@@ -3,7 +3,7 @@ import {
   CrearAgendaDTO,
   ActualizarAgendaDTO,
   BuscarAgendaDTO,
-} from "../dto";
+} from "../../dto";
 import { AgendaModel } from "@domain/_connections/mongodb";
 import { mongoToAgenda } from "@domain/_helpers";
 

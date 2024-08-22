@@ -3,7 +3,7 @@ import {
   ActualizarAgendamientoDTO,
   BuscarAgendamientoDTO,
   CrearAgendamientoDTO,
-} from "../dto";
+} from "../../dto";
 import { AgendamientoModel } from "@domain/_connections/mongodb";
 import { mongoToAgendamiento } from "@domain/_helpers";
 
