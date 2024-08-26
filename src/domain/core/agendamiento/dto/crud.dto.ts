@@ -1,12 +1,11 @@
-import { TAgendamientoEstado } from "@global/models/types";
-import { IAgendamiento } from "@global/models/interfaces";
+import { IAgendamientoOpcional } from "@global/models/interfaces";
 
 export interface CrearAgendamientoDTO {
-  agendamiento: IAgendamiento;
+  agendamiento: IAgendamientoOpcional;
 }
 
 export interface BuscarAgendamientoDTO {
-  id?: string;
+  _id?: string;
   porProfesionalClienteyFecha?: {
     idProfesional: string;
     idCliente: string;
@@ -16,12 +15,5 @@ export interface BuscarAgendamientoDTO {
 
 export interface ActualizarAgendamientoDTO {
   buscarPor: BuscarAgendamientoDTO;
-  actualizado: {
-    nota?: string;
-    agendamientoInicio?: Date;
-    agendamientoFin?: Date;
-    estado?: TAgendamientoEstado;
-    fechaConfirmado?: Date;
-    fechaEliminacion?: Date;
-  };
+  actualizado: IAgendamientoOpcional;
 }

@@ -23,7 +23,3 @@ export const actualizar = async (
 ): Promise<IAgenda> => {
   return await repository.crud.actualizar(dto);
 };
-
-export const eliminar = async (dto: BuscarAgendaDTO): Promise<IAgenda> => {
-  return await repository.crud.eliminar(dto);
-}

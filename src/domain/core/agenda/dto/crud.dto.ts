@@ -1,18 +1,16 @@
-import { IAgenda } from "@global/models/interfaces";
+import { IAgendaOpcional } from "@global/models/interfaces";
 
 export interface CrearAgendaDTO {
-  agenda: IAgenda;
+  agenda: IAgendaOpcional;
 }
 
 export interface BuscarAgendaDTO {
-  id?: string;
+  _id?: string;
   idUsuario?: string;
   idProfesional?: string;
 }
 
 export interface ActualizarAgendaDTO {
   buscarPor: BuscarAgendaDTO;
-  actualizado: {
-    infoSemana?: object;
-  };
+  actualizado: IAgendaOpcional;
 }

@@ -18,9 +18,17 @@ export interface IAgendaInfoSemana {
 }
 
 export interface IAgenda {
-  id: string;
+  _id: string;
   idUsuario: string;
   idProfesional: string;
   infoSemana: IAgendaInfoSemana[];
   fechaCreacion: Date;
+}
+
+export interface IAgendaOpcional {
+  _id?: string;
+  idUsuario?: string;
+  idProfesional?: string;
+  infoSemana?: IAgendaInfoSemana[];
+  fechaCreacion?: Date;
 }

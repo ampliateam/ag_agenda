@@ -1,6 +1,6 @@
 import { BuscarAgendamientoDTO } from "./crud.dto";
 
-export interface EliminarAgendamientoDTO {
+export interface EliminarLogicamenteAgendamientoDTO {
     buscarPor: BuscarAgendamientoDTO;
     fechaEliminacion: Date;
 }

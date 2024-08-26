@@ -17,7 +17,7 @@ export interface IProfesionalDireccion {
 }
 
 export interface IProfesional {
-  id: string;
+  _id: string;
   idUsuario: string;
   contactos: IProfesionalContacto[];
   direccion: IProfesionalDireccion;

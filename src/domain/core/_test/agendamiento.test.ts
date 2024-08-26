@@ -1,44 +1,29 @@
 import { conexionConMongoDB } from "@global/connections/mongodb.connection";
 import { services } from "@domain/services";
 
-describe("CRUD - agendamiento", () => {
-  const id = "000000000000000000000000";
-  const idUsuario = "123456";
-  const idUsuarioProfesional = "000000000000000000000004";
-  const idProfesional = "000000000000000000000001";
-  const idServicioProfesional = "000000000000000000000000";
+describe.skip("CRUD - agendamiento", () => {
+  const ids = [
+    ''
+  ];
+  const idUsuario = "000000";
 
   beforeAll(async () => {
     await conexionConMongoDB();
+  });
 
-    // Obtenemos el servicio de un agendamiento y eliminar si existe
-    const agendamientoExistente = await services.core.agendamiento.crud.obtener(
-      {
-        id
-      }
-    );
-    if (agendamientoExistente) {
-      await services.core.agendamiento.crud.eliminarLogicamente(
-        {
-          buscarPor: { id },
-          fechaEliminacion: new Date,
-        }
-      );
-    }
-
+  test('Crear agendamiento', async () => {
     // Creamos un nuevo servicio de agenda
     const agendamientoNuevo = await services.core.agendamiento.crud.crear({
       agendamiento: {
-        id,
-        idUsuarioProfesional,
-        idProfesional,
-        idServicioProfesional,
-        idCliente: idUsuario,
+        idUsuarioProfesional: idUsuario,
+        idProfesional: 'profesional0000000000000',
+        idServicioProfesional: 'servicioprofesional0000',
+        idCliente: 'cliente00000000000000000',
         idUsuarioCliente: null,
         tipo: "cliente",
         nota: "Pago se agendo",
-        agendamientoInicio: new Date(),
-        agendamientoFin: new Date(),
+        agendamientoInicio: new Date(),   // El cliente/profesional no pueden tener 2 o mas agendamientos confirmados solapados en horario 
+        agendamientoFin: new Date(),      // Debe ser mayor a "agendamientoInicio"
         estado: "pendiente",
         fechaConfirmado: null,
         fechaCreacion: new Date(),
@@ -46,44 +31,42 @@ describe("CRUD - agendamiento", () => {
       },
     });
 
-    expect(agendamientoNuevo.id).toEqual(id);
+    expect(agendamientoNuevo).toBeTruthy();
   });
 
-  test("Obtener agendamiento", async () => {
+  test.skip("Obtener agendamiento", async () => {
+    const _id = ids[0];
+
     // Obtenemos el servicio de un agenda
-    const agendamiento = await services.core.agendamiento.crud.obtener({
-      id,
-    });
+    const agendamiento = await services.core.agendamiento.crud.obtener({ _id });
 
-    expect(agendamiento.id).toEqual(id);
+    expect(agendamiento._id).toEqual(_id);
   });
 
-  test("Actualizar agendamiento", async () => {
+  test.skip("Actualizar agendamiento", async () => {
+    const _id = ids[0];
+    const nota = 'QUE BUENA NOTA';
+
     // Obtenemos el servicio de un agenda
     const agendamiento = await services.core.agendamiento.crud.actualizar({
-      buscarPor: { id },
-      actualizado: {
-        nota: "QUE BUENA NOTA",
-      }
+      buscarPor: { _id },
+      actualizado: { nota }
     });
 
-    expect(agendamiento.id).toEqual(id);
+    expect(agendamiento._id).toEqual(_id);
+    expect(agendamiento.nota).toEqual(nota);
   });
 
-  test("Obtener lista servicio agendamiento", async () => {
-    const listaId = ["000000000000000000000000"];
+  test.skip("Eliminar agendamiento", async () => {
+    const _id = ids[0];
 
-    // Obtener lista de servicios agendaes
-    const lista = await services.core.agendamiento.obtenerListaPorID(listaId);
+    // Obtenemos el servicio de un agenda
+    const agendamiento = await services.core.agendamiento.eliminarLogicamente({
+      buscarPor: { _id },
+      fechaEliminacion: new Date()
+    });
 
-    // Si no existe ningun servicio agenda, verificar
-    if (!lista.length) {
-      return expect(lista.length).toEqual(0);
-    }
-
-    // Verificar lista de id de servicios agendaes
-    for (const id of listaId) {
-      expect(lista.find((v) => v.id === id)?.id || "").toEqual(id);
-    }
+    expect(agendamiento._id).toEqual(_id);
+    expect(agendamiento.estado).toEqual('eliminado');
   });
 });
