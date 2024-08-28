@@ -5,7 +5,7 @@ const timeoutTest = 20 * 1000;
 
 describe("CRUD - Agenda", () => {
   const ids = [
-    '66c8e4758b039f11d7388960',
+    '66ce8338fe104e4cdad2c66f',
     '66c8f27fc98c87a599b34676',
     '66c8f2abb708eed0ee9549fe',
   ];
@@ -85,14 +85,26 @@ describe("CRUD - Agenda", () => {
           {
             dia: "sabado",
             esDiaLaboral: false,
-            atencion: null,
-            almuerzo: null,
+            atencion: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
+            almuerzo: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
           },
           {
             dia: "domingo",
             esDiaLaboral: false,
-            atencion: null,
-            almuerzo: null,
+            atencion: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
+            almuerzo: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
           },
         ],
         fechaCreacion: new Date(),
@@ -130,6 +142,7 @@ describe("CRUD - Agenda", () => {
     const agenda = await services.core.agenda.crud.actualizar({
       buscarPor: { _id },
       actualizado: {
+        idProfesional: '000000000000000000000003',
         infoSemana: [
           {
             dia: "lunes",
@@ -181,27 +194,39 @@ describe("CRUD - Agenda", () => {
           },
           {
             dia: "viernes",
-            esDiaLaboral: true,
+            esDiaLaboral: false,
             atencion: {
-              horaInicio: "09:00",
-              horaFin: "18:00"
+              horaInicio: "00:00",
+              horaFin: "00:00"
             },
             almuerzo: {
-              horaInicio: "12:00",
-              horaFin: "13:00"
+              horaInicio: "00:00",
+              horaFin: "00:00"
             },
           },
           {
             dia: "sabado",
             esDiaLaboral: false,
-            atencion: null,
-            almuerzo: null,
+            atencion: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
+            almuerzo: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
           },
           {
             dia: "domingo",
             esDiaLaboral: false,
-            atencion: null,
-            almuerzo: null,
+            atencion: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
+            almuerzo: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
           },
         ],
       }

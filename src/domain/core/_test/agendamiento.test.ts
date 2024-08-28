@@ -1,9 +1,9 @@
 import { conexionConMongoDB } from "@global/connections/mongodb.connection";
 import { services } from "@domain/services";
 
-describe.skip("CRUD - agendamiento", () => {
+describe("CRUD - agendamiento", () => {
   const ids = [
-    ''
+    '66ce799898f9b7f6bab0564e'
   ];
   const idUsuario = "000000";
 
@@ -11,7 +11,7 @@ describe.skip("CRUD - agendamiento", () => {
     await conexionConMongoDB();
   });
 
-  test('Crear agendamiento', async () => {
+  test.skip('Crear agendamiento', async () => {
     // Creamos un nuevo servicio de agenda
     const agendamientoNuevo = await services.core.agendamiento.crud.crear({
       agendamiento: {
@@ -23,7 +23,7 @@ describe.skip("CRUD - agendamiento", () => {
         tipo: "cliente",
         nota: "Pago se agendo",
         agendamientoInicio: new Date(),   // El cliente/profesional no pueden tener 2 o mas agendamientos confirmados solapados en horario 
-        agendamientoFin: new Date(),      // Debe ser mayor a "agendamientoInicio"
+        agendamientoFin: new Date("2024-08-30"),      // Debe ser mayor a "agendamientoInicio"
         estado: "pendiente",
         fechaConfirmado: null,
         fechaCreacion: new Date(),
@@ -46,11 +46,12 @@ describe.skip("CRUD - agendamiento", () => {
   test.skip("Actualizar agendamiento", async () => {
     const _id = ids[0];
     const nota = 'QUE BUENA NOTA';
+    const agendamientoFin = new Date("2024-08-29");
 
     // Obtenemos el servicio de un agenda
     const agendamiento = await services.core.agendamiento.crud.actualizar({
       buscarPor: { _id },
-      actualizado: { nota }
+      actualizado: { nota, agendamientoFin }
     });
 
     expect(agendamiento._id).toEqual(_id);
