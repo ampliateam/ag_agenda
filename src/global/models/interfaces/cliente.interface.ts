@@ -25,7 +25,7 @@ export interface IClienteRecordatorio {
 }
 
 export interface ICliente {
-  id: string;
+  _id: string;
   idUsuario: string;
   idProfesional: string;
   nombre: string;

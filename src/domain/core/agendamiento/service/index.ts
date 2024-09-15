@@ -1,2 +1,3 @@
 export * as crud from './crud.service';
-export * from './obtener-lista.service';
+export * as db from './db.service';
+export * from './eliminar-logicamente.service';

@@ -3,7 +3,7 @@ import {
   CrearAgendaDTO,
   ActualizarAgendaDTO,
   BuscarAgendaDTO,
-} from "../dto";
+} from "../../dto";
 import { AgendaModel } from "@domain/_connections/mongodb";
 import { mongoToAgenda } from "@domain/_helpers";
 
@@ -11,7 +11,7 @@ export const crear = async (
   dto: CrearAgendaDTO
 ): Promise<IAgenda> => {
   const modelMongoDB = await AgendaModel.create(dto.agenda);
-  return await obtener({ id: modelMongoDB.id });
+  return await obtener({ _id: modelMongoDB._id.toString() });
 };
 
 export const obtener = async (
@@ -19,8 +19,8 @@ export const obtener = async (
 ): Promise<IAgenda> => {
   // Proceso de filtracion
   const filtros: any = {};
-  if (dto.id) {
-    filtros._id = dto.id;
+  if (dto._id) {
+    filtros._id = dto._id;
   } else if (dto.idUsuario) {
     filtros.idUsuario = dto.idUsuario;
   } else if (dto.idProfesional) {
@@ -39,20 +39,9 @@ export const actualizar = async (
   if (!agenda) return null;
 
   await AgendaModel.updateOne(
-    {
-      _id: agenda.id,
-    },
+    { _id: agenda._id },
     dto.actualizado
   );
 
   return Object.assign(agenda, dto.actualizado);
 };
-
-export const eliminar = async (dto: BuscarAgendaDTO): Promise<IAgenda> => {
-  const servicioProfesional: IAgenda = await obtener(dto);
-  if (!servicioProfesional) return null;
-
-  await AgendaModel.findByIdAndDelete(servicioProfesional.id);
-
-  return servicioProfesional;
-}

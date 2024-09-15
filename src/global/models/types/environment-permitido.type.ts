@@ -1,10 +1,10 @@
 export type EnvironmentPermitido =
-  | "local_development"
+  | "personal"
   | "development"
   | "testing"
   | "production";
 export const listaEnvironmentPermitido = [
-  "local_development",
+  "personal",
   "development",
   "testing",
   "production",

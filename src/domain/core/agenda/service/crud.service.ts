@@ -4,7 +4,7 @@ import {
   BuscarAgendaDTO,
   ActualizarAgendaDTO,
 } from "../dto";
-import * as repository from "../repository";
+import * as repository from '../repository/mongodb';
 
 export const crear = async (
   dto: CrearAgendaDTO
@@ -23,7 +23,3 @@ export const actualizar = async (
 ): Promise<IAgenda> => {
   return await repository.crud.actualizar(dto);
 };
-
-export const eliminar = async (dto: BuscarAgendaDTO): Promise<IAgenda> => {
-  return await repository.crud.eliminar(dto);
-}

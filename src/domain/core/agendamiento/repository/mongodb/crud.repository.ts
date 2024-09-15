@@ -3,7 +3,7 @@ import {
   ActualizarAgendamientoDTO,
   BuscarAgendamientoDTO,
   CrearAgendamientoDTO,
-} from "../dto";
+} from "../../dto";
 import { AgendamientoModel } from "@domain/_connections/mongodb";
 import { mongoToAgendamiento } from "@domain/_helpers";
 
@@ -11,7 +11,7 @@ export const crear = async (
   dto: CrearAgendamientoDTO
 ): Promise<IAgendamiento> => {
   const modelMongoDB = await AgendamientoModel.create(dto.agendamiento);
-  return await obtener({ id: modelMongoDB.id });
+  return await obtener({ _id: modelMongoDB._id.toString() });
 };
 
 export const obtener = async (
@@ -19,8 +19,8 @@ export const obtener = async (
 ): Promise<IAgendamiento> => {
   // Proceso de filtracion
   const filtros: any = {};
-  if (dto.id) {
-    filtros._id = dto.id;
+  if (dto._id) {
+    filtros._id = dto._id;
   } else if (dto.porProfesionalClienteyFecha) {
     filtros.idProfesional = dto.porProfesionalClienteyFecha.idProfesional;
     filtros.idCliente = dto.porProfesionalClienteyFecha.idCliente;
@@ -48,9 +48,7 @@ export const actualizar = async (
   if (!agendamiento) return null;
 
   await AgendamientoModel.updateOne(
-    {
-      _id: agendamiento.id,
-    },
+    { _id: agendamiento._id },
     dto.actualizado
   );
 

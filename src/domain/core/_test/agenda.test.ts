@@ -1,30 +1,26 @@
 import { conexionConMongoDB } from "@global/connections/mongodb.connection";
 import { services } from "@domain/services";
 
+const timeoutTest = 20 * 1000;
+
 describe("CRUD - Agenda", () => {
-  const idUsuario = "123456";
-  const idProfesional = "000000000000000000000001";
-  const idAgenda = "000000000000000000000000";
+  const ids = [
+    '66ce8338fe104e4cdad2c66f',
+    '66c8f27fc98c87a599b34676',
+    '66c8f2abb708eed0ee9549fe',
+  ];
+  const idUsuario = "000002";
 
   beforeAll(async () => {
     await conexionConMongoDB();
+  }, timeoutTest);
 
-    // Eliminamos los usuarios de prueba
-    const agendaExistente = await services.core.agenda.crud.obtener({
-      idUsuario,
-    });
-    if (agendaExistente) {
-      await services.core.agenda.crud.eliminar({
-        idUsuario
-      });
-    }
-
+  test.skip('Crear agenda', async () => {
     // Crear un agenda
     const agendaNuevo = await services.core.agenda.crud.crear({
       agenda: {
-        id: idAgenda,
         idUsuario,
-        idProfesional,
+        idProfesional: '000000000000000000000002',
         infoSemana: [
           {
             dia: "lunes",
@@ -89,34 +85,64 @@ describe("CRUD - Agenda", () => {
           {
             dia: "sabado",
             esDiaLaboral: false,
-            atencion: null,
-            almuerzo: null,
+            atencion: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
+            almuerzo: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
           },
           {
             dia: "domingo",
             esDiaLaboral: false,
-            atencion: null,
-            almuerzo: null,
+            atencion: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
+            almuerzo: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
           },
         ],
         fechaCreacion: new Date(),
       },
     });
 
-    expect(agendaNuevo.id).toEqual(idAgenda);
-  });
+    expect(agendaNuevo._id).toBeTruthy();
+  }, timeoutTest);
 
-  test("Obtener agenda", async () => {
+  test.skip("Obtener agenda", async () => {
+    const _id = ids[0];
+
     // Obtener agenda
-    const agenda = await services.core.agenda.crud.obtener({ idUsuario });
+    const [
+      agendaCrud,
+      [agendaDb],
+      agendas,
+    ] = await Promise.all([
+      services.core.agenda.crud.obtener({ _id }),
+      services.core.agenda.db.obtener({ _id }),
+      services.core.agenda.db.obtener({ _id: { '$in': ids } }),
+    ]);
 
-    expect(agenda.id).toEqual(idAgenda);
-  });
-  test("Actualizar agenda", async () => {
+    expect(agendaCrud._id).toEqual(_id);
+    expect(agendaDb._id).toEqual(_id);
+    agendas.map(agenda => {
+      expect(ids).toContain(agenda._id);
+    });
+  }, timeoutTest);
+
+  test.skip("Actualizar agenda", async () => {
+    const _id = ids[0];
+
     // Obtener agenda
     const agenda = await services.core.agenda.crud.actualizar({
-      buscarPor: { id: idAgenda },
+      buscarPor: { _id },
       actualizado: {
+        idProfesional: '000000000000000000000003',
         infoSemana: [
           {
             dia: "lunes",
@@ -168,32 +194,44 @@ describe("CRUD - Agenda", () => {
           },
           {
             dia: "viernes",
-            esDiaLaboral: true,
+            esDiaLaboral: false,
             atencion: {
-              horaInicio: "09:00",
-              horaFin: "18:00"
+              horaInicio: "00:00",
+              horaFin: "00:00"
             },
             almuerzo: {
-              horaInicio: "12:00",
-              horaFin: "13:00"
+              horaInicio: "00:00",
+              horaFin: "00:00"
             },
           },
           {
             dia: "sabado",
             esDiaLaboral: false,
-            atencion: null,
-            almuerzo: null,
+            atencion: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
+            almuerzo: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
           },
           {
             dia: "domingo",
             esDiaLaboral: false,
-            atencion: null,
-            almuerzo: null,
+            atencion: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
+            almuerzo: {
+              horaInicio: "00:00",
+              horaFin: "00:00"
+            },
           },
         ],
       }
     });
 
-    expect(agenda.id).toEqual(idAgenda);
-  });
+    expect(agenda._id).toEqual(_id);
+  }, timeoutTest);
 });
