@@ -6,3 +6,5 @@ export * from './solicitante.type';
 export * from './usuario.type';
 export * from './agenda.type';
 export * from './agendamiento.type';
+export * from './local.type';
+export * from './config-agenda-local.type';

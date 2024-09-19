@@ -3,7 +3,7 @@ import {
   TClienteContactoPrioridad,
   TClienteEstado,
   TClienteMensajeRecordatorioTipo,
-} from "@global/models/types";
+} from '@global/models/types';
 
 export interface IClienteContacto {
   codigoAccesoInternacional: string | null;

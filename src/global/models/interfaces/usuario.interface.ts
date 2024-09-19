@@ -2,7 +2,7 @@ import {
   TUsuarioEstado,
   TUsuarioExternoRol,
   TUsuarioPersonaRol,
-} from "@global/models/types";
+} from '@global/models/types';
 
 export interface IUsuarioPersona {
   uid: string;

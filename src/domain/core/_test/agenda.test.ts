@@ -1,15 +1,15 @@
-import { conexionConMongoDB } from "@global/connections/mongodb.connection";
-import { services } from "@domain/services";
+import { conexionConMongoDB } from '@global/connections/mongodb.connection';
+import { services } from '@domain/services';
 
 const timeoutTest = 20 * 1000;
 
-describe("CRUD - Agenda", () => {
+describe('CRUD - Agenda', () => {
+  const idProfesional = '000000000000000000000002';
   const ids = [
-    '66ce8338fe104e4cdad2c66f',
-    '66c8f27fc98c87a599b34676',
-    '66c8f2abb708eed0ee9549fe',
+    '66eb458332b6f862674afc57',
+    '66eb45cfaa73b5667614fda5',
+    '66eb45e83c0236ef80931558',
   ];
-  const idUsuario = "000002";
 
   beforeAll(async () => {
     await conexionConMongoDB();
@@ -17,221 +17,160 @@ describe("CRUD - Agenda", () => {
 
   test.skip('Crear agenda', async () => {
     // Crear un agenda
-    const agendaNuevo = await services.core.agenda.crud.crear({
+    const nuevo = await services.core.agenda.crud.crear({
       agenda: {
-        idUsuario,
-        idProfesional: '000000000000000000000002',
+        idProfesional,
         infoSemana: [
           {
-            dia: "lunes",
-            esDiaLaboral: true,
-            atencion: {
-              horaInicio: "09:00",
-              horaFin: "18:00"
-            },
-            almuerzo: {
-              horaInicio: "12:00",
-              horaFin: "13:00"
-            },
+            dia: 'lunes',
+            recesos: [{
+              nota: '',
+              horaInicio: '09:00',
+              horaFin: '18:00',
+            }],
           },
           {
-            dia: "martes",
-            esDiaLaboral: true,
-            atencion: {
-              horaInicio: "09:00",
-              horaFin: "18:00"
-            },
-            almuerzo: {
-              horaInicio: "12:00",
-              horaFin: "13:00"
-            },
+            dia: 'martes',
+            recesos: [{
+              nota: '',
+              horaInicio: '09:00',
+              horaFin: '18:00',
+            }],
           },
           {
-            dia: "miercoles",
-            esDiaLaboral: true,
-            atencion: {
-              horaInicio: "09:00",
-              horaFin: "18:00"
-            },
-            almuerzo: {
-              horaInicio: "12:00",
-              horaFin: "13:00"
-            },
+            dia: 'miercoles',
+            recesos: [{
+              nota: '',
+              horaInicio: '09:00',
+              horaFin: '18:00',
+            }],
           },
           {
-            dia: "jueves",
-            esDiaLaboral: true,
-            atencion: {
-              horaInicio: "09:00",
-              horaFin: "18:00"
-            },
-            almuerzo: {
-              horaInicio: "12:00",
-              horaFin: "13:00"
-            },
+            dia: 'jueves',
+            recesos: [{
+              nota: '',
+              horaInicio: '09:00',
+              horaFin: '18:00',
+            }],
           },
           {
-            dia: "viernes",
-            esDiaLaboral: true,
-            atencion: {
-              horaInicio: "09:00",
-              horaFin: "18:00"
-            },
-            almuerzo: {
-              horaInicio: "12:00",
-              horaFin: "13:00"
-            },
+            dia: 'viernes',
+            recesos: [{
+              nota: '',
+              horaInicio: '09:00',
+              horaFin: '18:00',
+            }],
           },
           {
-            dia: "sabado",
-            esDiaLaboral: false,
-            atencion: {
-              horaInicio: "00:00",
-              horaFin: "00:00"
-            },
-            almuerzo: {
-              horaInicio: "00:00",
-              horaFin: "00:00"
-            },
+            dia: 'sabado',
+            recesos: [{
+              nota: '',
+              horaInicio: '09:00',
+              horaFin: '18:00',
+            }],
           },
           {
-            dia: "domingo",
-            esDiaLaboral: false,
-            atencion: {
-              horaInicio: "00:00",
-              horaFin: "00:00"
-            },
-            almuerzo: {
-              horaInicio: "00:00",
-              horaFin: "00:00"
-            },
+            dia: 'domingo',
+            recesos: [{
+              nota: '',
+              horaInicio: '09:00',
+              horaFin: '18:00',
+            }],
           },
         ],
         fechaCreacion: new Date(),
       },
     });
 
-    expect(agendaNuevo._id).toBeTruthy();
+    expect(nuevo._id).toBeTruthy();
   }, timeoutTest);
 
-  test.skip("Obtener agenda", async () => {
-    const _id = ids[0];
-
-    // Obtener agenda
+  test.skip('Obtener agenda', async () => {
     const [
-      agendaCrud,
-      [agendaDb],
-      agendas,
+      dataCrud,
+      [dataDb],
+      listaDb,
     ] = await Promise.all([
-      services.core.agenda.crud.obtener({ _id }),
-      services.core.agenda.db.obtener({ _id }),
+      services.core.agenda.crud.obtener({ _id: ids[0] }),
+      services.core.agenda.db.obtener({ _id: ids[1] }),
       services.core.agenda.db.obtener({ _id: { '$in': ids } }),
     ]);
 
-    expect(agendaCrud._id).toEqual(_id);
-    expect(agendaDb._id).toEqual(_id);
-    agendas.map(agenda => {
-      expect(ids).toContain(agenda._id);
+    expect(dataCrud._id).toEqual(ids[0]);
+    expect(dataDb._id).toEqual(ids[1]);
+    listaDb.map(obj => {
+      expect(ids).toContain(obj._id);
     });
   }, timeoutTest);
 
-  test.skip("Actualizar agenda", async () => {
+  test.skip('Actualizar agenda', async () => {
     const _id = ids[0];
 
     // Obtener agenda
-    const agenda = await services.core.agenda.crud.actualizar({
+    const actualizado = await services.core.agenda.crud.actualizar({
       buscarPor: { _id },
       actualizado: {
-        idProfesional: '000000000000000000000003',
         infoSemana: [
           {
-            dia: "lunes",
-            esDiaLaboral: true,
-            atencion: {
-              horaInicio: "08:00",
-              horaFin: "19:00"
-            },
-            almuerzo: {
-              horaInicio: "12:00",
-              horaFin: "13:00"
-            },
+            dia: 'lunes',
+            recesos: [{
+              nota: 'almuerzo',
+              horaInicio: '12:00',
+              horaFin: '14:00',
+            }],
           },
           {
-            dia: "martes",
-            esDiaLaboral: true,
-            atencion: {
-              horaInicio: "09:00",
-              horaFin: "18:00"
-            },
-            almuerzo: {
-              horaInicio: "12:00",
-              horaFin: "13:00"
-            },
+            dia: 'martes',
+            recesos: [{
+              nota: 'almuerzo',
+              horaInicio: '12:00',
+              horaFin: '14:00',
+            }],
           },
           {
-            dia: "miercoles",
-            esDiaLaboral: true,
-            atencion: {
-              horaInicio: "09:00",
-              horaFin: "18:00"
-            },
-            almuerzo: {
-              horaInicio: "12:00",
-              horaFin: "13:00"
-            },
+            dia: 'miercoles',
+            recesos: [{
+              nota: 'almuerzo',
+              horaInicio: '12:00',
+              horaFin: '14:00',
+            }],
           },
           {
-            dia: "jueves",
-            esDiaLaboral: true,
-            atencion: {
-              horaInicio: "09:00",
-              horaFin: "18:00"
-            },
-            almuerzo: {
-              horaInicio: "12:00",
-              horaFin: "13:00"
-            },
+            dia: 'jueves',
+            recesos: [{
+              nota: 'almuerzo',
+              horaInicio: '12:00',
+              horaFin: '14:00',
+            }],
           },
           {
-            dia: "viernes",
-            esDiaLaboral: false,
-            atencion: {
-              horaInicio: "00:00",
-              horaFin: "00:00"
-            },
-            almuerzo: {
-              horaInicio: "00:00",
-              horaFin: "00:00"
-            },
+            dia: 'viernes',
+            recesos: [{
+              nota: 'almuerzo',
+              horaInicio: '12:00',
+              horaFin: '14:00',
+            }],
           },
           {
-            dia: "sabado",
-            esDiaLaboral: false,
-            atencion: {
-              horaInicio: "00:00",
-              horaFin: "00:00"
-            },
-            almuerzo: {
-              horaInicio: "00:00",
-              horaFin: "00:00"
-            },
+            dia: 'sabado',
+            recesos: [{
+              nota: 'almuerzo',
+              horaInicio: '12:00',
+              horaFin: '14:00',
+            }],
           },
           {
-            dia: "domingo",
-            esDiaLaboral: false,
-            atencion: {
-              horaInicio: "00:00",
-              horaFin: "00:00"
-            },
-            almuerzo: {
-              horaInicio: "00:00",
-              horaFin: "00:00"
-            },
+            dia: 'domingo',
+            recesos: [{
+              nota: 'almuerzo',
+              horaInicio: '12:00',
+              horaFin: '14:00',
+            }],
           },
         ],
       }
     });
 
-    expect(agenda._id).toEqual(_id);
+    expect(actualizado._id).toEqual(_id);
   }, timeoutTest);
 });

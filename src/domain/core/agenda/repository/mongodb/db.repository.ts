@@ -1,7 +1,7 @@
-import { AgendaModel } from "@domain/_connections/mongodb";
-import { mongoToAgenda } from "@domain/_helpers";
+import { AgendaModel } from '@domain/_connections/mongodb';
+import { mongoToAgenda } from '@domain/_helpers';
 
-// Tener cuidado mientras se use el plan de mongodb "pago-por-uso"
+// Tener cuidado mientras se use el plan de mongodb 'pago-por-uso'
 export const obtener = async (filtros: any) => {
   const listaModelMongo = await AgendaModel.find(filtros);
   return listaModelMongo.map(v => mongoToAgenda(v));

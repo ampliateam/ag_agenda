@@ -1,34 +1,26 @@
-import { TAgendaInfoSemanaDia } from "@global/models/types";
+import { TInfoSemanaDia } from '@global/models/types';
 
-export interface IAgendaInfoSemanaAtencion {
-  horaInicio: string;
-  horaFin: string;
-}
+// Modelo helper
+type TAgendaInfoSemana = {
+  dia: TInfoSemanaDia;
+  recesos: {
+    nota: string;
+    horaInicio: string;
+    horaFin: string;
+  }[];
+};
 
-export interface IAgendaInfoSemanaAlmuerzo {
-  horaInicio: string;
-  horaFin: string;
-}
-
-export interface IAgendaInfoSemana {
-  dia: TAgendaInfoSemanaDia;
-  esDiaLaboral: boolean;
-  atencion: IAgendaInfoSemanaAtencion;
-  almuerzo: IAgendaInfoSemanaAlmuerzo;
-}
-
+// Modelo principal
 export interface IAgenda {
   _id: string;
-  idUsuario: string;
   idProfesional: string;
-  infoSemana: IAgendaInfoSemana[];
+  infoSemana: TAgendaInfoSemana[];
   fechaCreacion: Date;
-}
+};
 
 export interface IAgendaOpcional {
   _id?: string;
-  idUsuario?: string;
   idProfesional?: string;
-  infoSemana?: IAgendaInfoSemana[];
+  infoSemana?: TAgendaInfoSemana[];
   fechaCreacion?: Date;
-}
+};
