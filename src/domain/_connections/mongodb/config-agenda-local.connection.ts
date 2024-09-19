@@ -66,7 +66,7 @@ const defaultValue = {
 export const ConfigAgendaLocalSchema = new Schema({
   idAgenda: { type: String, required: true },
   idLocal: { type: String, required: true, unique: true },
-  infoSemana: { type: Array as any, required: false, default: defaultValue.infoSemana },
+  infoSemana: [{ type: Object, required: false, default: defaultValue.infoSemana }],
   // estado: { type: String, required: false, default: defaultValue.estado },
 }, { versionKey: false });
 

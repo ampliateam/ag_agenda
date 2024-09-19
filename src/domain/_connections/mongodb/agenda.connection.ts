@@ -37,7 +37,7 @@ const defaultValue = {
 
 const AgendaSchema = new Schema({
   idProfesional: { type: String, required: true, unique: true, },
-  infoSemana: { type: Array as any, required: false, default: defaultValue.infoSemana, },
+  infoSemana: [{ type: Object, required: false, default: defaultValue.infoSemana, }],
   fechaCreacion: { type: Date, required: false, default: defaultValue.fechaCreacion, },
 }, { versionKey: false });
 
