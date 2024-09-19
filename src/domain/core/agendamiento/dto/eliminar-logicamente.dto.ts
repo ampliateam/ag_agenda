@@ -1,4 +1,4 @@
-import { BuscarAgendamientoDTO } from "./crud.dto";
+import { BuscarAgendamientoDTO } from './crud.dto';
 
 export interface EliminarLogicamenteAgendamientoDTO {
     buscarPor: BuscarAgendamientoDTO;

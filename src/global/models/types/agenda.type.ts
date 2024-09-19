@@ -1,8 +1,8 @@
-export type TAgendaInfoSemanaDia =
-  | "lunes"
-  | "martes"
-  | "miercoles"
-  | "jueves"
-  | "viernes"
-  | "sabado"
-  | "domingo";
+export type TInfoSemanaDia =
+  | 'lunes'
+  | 'martes'
+  | 'miercoles'
+  | 'jueves'
+  | 'viernes'
+  | 'sabado'
+  | 'domingo';

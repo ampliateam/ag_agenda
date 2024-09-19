@@ -1,7 +1,7 @@
-import { AgendamientoModel } from "@domain/_connections/mongodb";
-import { mongoToAgendamiento } from "@domain/_helpers";
+import { AgendamientoModel } from '@domain/_connections/mongodb';
+import { mongoToAgendamiento } from '@domain/_helpers';
 
-// Tener cuidado mientras se use el plan de mongodb "pago-por-uso"
+// Tener cuidado mientras se use el plan de mongodb 'pago-por-uso'
 export const obtener = async (filtros: any) => {
   const listaModelMongo = await AgendamientoModel.find(filtros);
   return listaModelMongo.map(v => mongoToAgendamiento(v));

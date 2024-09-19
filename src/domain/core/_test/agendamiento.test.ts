@@ -1,73 +1,93 @@
-import { conexionConMongoDB } from "@global/connections/mongodb.connection";
-import { services } from "@domain/services";
+import { conexionConMongoDB } from '@global/connections/mongodb.connection';
+import { services } from '@domain/services';
 
-describe("CRUD - agendamiento", () => {
+describe('CRUD - agendamiento', () => {
   const ids = [
-    '66ce799898f9b7f6bab0564e'
+    '66eb88ad3b909773ec1d7bde',
+    '66eb8b7ef00face8df2a491c',
+    '66eb8b8e26a6a8f5fe74e1ed',
   ];
-  const idUsuario = "000000";
 
   beforeAll(async () => {
     await conexionConMongoDB();
   });
 
   test.skip('Crear agendamiento', async () => {
-    // Creamos un nuevo servicio de agenda
-    const agendamientoNuevo = await services.core.agendamiento.crud.crear({
+    const nuevo = await services.core.agendamiento.crud.crear({
       agendamiento: {
-        idUsuarioProfesional: idUsuario,
-        idProfesional: 'profesional0000000000000',
-        idServicioProfesional: 'servicioprofesional0000',
-        idCliente: 'cliente00000000000000000',
-        idUsuarioCliente: null,
-        tipo: "cliente",
-        nota: "Pago se agendo",
-        agendamientoInicio: new Date(),   // El cliente/profesional no pueden tener 2 o mas agendamientos confirmados solapados en horario 
-        agendamientoFin: new Date("2024-08-30"),      // Debe ser mayor a "agendamientoInicio"
-        estado: "pendiente",
+        idAgenda: '66eb458332b6f862674afc57',
+        idCliente: 'cliente-0000000000000001',
+        idProfesional: 'profesional-000000000000',
+        idServicioProfesional: 'sp-000000000000000000000',
+        idLocal: 'local-000000000000000000',
+        tipo: 'cliente',
+        nota: '',
+        encuentro: {
+          tipo: 'virtual',
+          idLocal: null,
+          direccion: { referencia: '', ubicacion: [0,0] },
+          enlace: 'https://reunion.agendalia.la/reu/6f87ds6f78ds6786fd7f89d7f8s'
+        },
+        agendamientoInicio: new Date('2024-09-19T04:00:00Z'),
+        agendamientoFin: new Date('2024-09-19T05:00:00Z'),
+        estado: 'pendiente',
         fechaConfirmado: null,
         fechaCreacion: new Date(),
         fechaEliminacion: null,
       },
     });
 
-    expect(agendamientoNuevo).toBeTruthy();
+    expect(nuevo).toBeTruthy();
   });
 
-  test.skip("Obtener agendamiento", async () => {
-    const _id = ids[0];
+  test.skip('Obtener agendamiento', async () => {
+    const [
+      dataCrud,
+      [dataDb],
+      listaDb,
+    ] = await Promise.all([
+      services.core.agendamiento.crud.obtener({ _id: ids[0] }),
+      services.core.agendamiento.db.obtener({ _id: ids[1] }),
+      services.core.agendamiento.db.obtener({ _id: { '$in': ids } }),
+    ]);
 
-    // Obtenemos el servicio de un agenda
-    const agendamiento = await services.core.agendamiento.crud.obtener({ _id });
-
-    expect(agendamiento._id).toEqual(_id);
+    expect(dataCrud._id).toEqual(ids[0]);
+    expect(dataDb._id).toEqual(ids[1]);
+    listaDb.map(obj => {
+      expect(ids).toContain(obj._id);
+    });
   });
 
-  test.skip("Actualizar agendamiento", async () => {
+  test.skip('Actualizar agendamiento', async () => {
     const _id = ids[0];
     const nota = 'QUE BUENA NOTA';
-    const agendamientoFin = new Date("2024-08-29");
+    const estado = 'confirmado';
+    const agendamientoFin = new Date('2024-09-19T04:00:01Z');
 
     // Obtenemos el servicio de un agenda
-    const agendamiento = await services.core.agendamiento.crud.actualizar({
+    const actualizado = await services.core.agendamiento.crud.actualizar({
       buscarPor: { _id },
-      actualizado: { nota, agendamientoFin }
+      actualizado: {
+        nota,
+        estado,
+        agendamientoFin
+      },
     });
 
-    expect(agendamiento._id).toEqual(_id);
-    expect(agendamiento.nota).toEqual(nota);
+    expect(actualizado._id).toEqual(_id);
+    expect(actualizado.nota).toEqual(nota);
   });
 
-  test.skip("Eliminar agendamiento", async () => {
-    const _id = ids[0];
+  test.skip('Eliminar agendamiento', async () => {
+    const _id = ids[2];
 
     // Obtenemos el servicio de un agenda
-    const agendamiento = await services.core.agendamiento.eliminarLogicamente({
+    const eliminado = await services.core.agendamiento.eliminarLogicamente({
       buscarPor: { _id },
       fechaEliminacion: new Date()
     });
 
-    expect(agendamiento._id).toEqual(_id);
-    expect(agendamiento.estado).toEqual('eliminado');
+    expect(eliminado._id).toEqual(_id);
+    expect(eliminado.estado).toEqual('eliminado');
   });
 });

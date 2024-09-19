@@ -2,7 +2,7 @@ import {
   TProfesionalContactoPrioridad,
   TProfesionalContactoTipo,
   TProfesionalEstado,
-} from "@global/models/types";
+} from '@global/models/types';
 
 export interface IProfesionalContacto {
   codigoAccesoInternacional: string | null;

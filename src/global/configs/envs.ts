@@ -1,10 +1,10 @@
-import dotenv from "dotenv";
-import { EnvironmentPermitido } from "@global/models/types";
+import dotenv from 'dotenv';
+import { EnvironmentPermitido } from '@global/models/types';
 
 dotenv.config();
 
 export const envs = {
-  modoTest: process.env.MODO_TEST === "true",
+  modoTest: process.env.MODO_TEST === 'true',
   codigoUsuarioExterno: process.env.CODIGO_USUARIO_EXTERNO,
   contrasenaUsuarioExterno: process.env.CONTRASENA_USUARIO_EXTERNO,
   dockerContainerName: process.env.DOCKER_CONTAINER_NAME,
@@ -15,8 +15,8 @@ export const envs = {
   mongoURI: process.env.MONGO_URI,
 };
 
-if (envs.modoTest && envs.environment !== "personal") {
+if (envs.modoTest && envs.environment !== 'personal') {
   throw new Error(
-    "El sistema no puede estar en modo test en entornos remotos."
+    'El sistema no puede estar en modo test en entornos remotos.'
   );
 }

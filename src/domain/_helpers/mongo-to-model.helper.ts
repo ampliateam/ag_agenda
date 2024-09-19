@@ -1,5 +1,5 @@
-import { IAgenda, IAgendamiento } from "@global/models/interfaces";
-import { IParametroSistema } from "@domain/_models/interfaces";
+import { IAgenda, IAgendamiento, IConfigAgendaLocal } from '@global/models/interfaces';
+import { IParametroSistema } from '@domain/_models/interfaces';
 
 const mongoToModel = (mongo: any) => {
   if (!mongo) return null;
@@ -24,4 +24,8 @@ export const mongoToAgenda = (mongo: any): IAgenda => {
 
 export const mongoToAgendamiento = (mongo: any): IAgendamiento => {
   return mongoToModel(mongo) as IAgendamiento;
+};
+
+export const mongoToConfigAgendaLocal = (mongo: any): IConfigAgendaLocal => {
+  return mongoToModel(mongo) as IConfigAgendaLocal;
 };

@@ -4,5 +4,6 @@ export * from './token-decodificado.interface';
 export * from './usuario.interface';
 export * from './agenda.interface';
 export * from './servicio-profesional.interface';
-export * from './agenda.interface'
-export * from './agendamiento.interface'
+export * from './agenda.interface';
+export * from './agendamiento.interface';
+export * from './config-agenda-local.interface';

@@ -1,4 +1,4 @@
-import { TServicioProfesionalEstado } from "@global/models/types";
+import { TServicioProfesionalEstado } from '@global/models/types';
 
 export interface IServicioProfesional {
   _id: string;
