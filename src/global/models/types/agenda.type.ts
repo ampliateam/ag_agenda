@@ -6,3 +6,12 @@ export type TInfoSemanaDia =
   | 'viernes'
   | 'sabado'
   | 'domingo';
+
+export type TAgendaInfoSemana = {
+  dia: TInfoSemanaDia;
+  recesos: {
+    nota: string;
+    horaInicio: string;
+    horaFin: string;
+  }[];
+};

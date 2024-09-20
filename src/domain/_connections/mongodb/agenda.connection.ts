@@ -1,6 +1,12 @@
 import { Schema, model } from 'mongoose';
 import { constants } from '@global/configs/constants';
+import { IAgenda } from '@global/models/interfaces';
+import { TAgendaInfoSemana } from '@global/models/types';
 
+// Definir la interfaz para el documento
+interface IAgendaMongoose extends Document, Omit<IAgenda, '_id'> {};
+
+// Guardar el valor por defecto de cada campo aqui (para los required=false)
 const defaultValue = {
   infoSemana: [
     {
@@ -31,14 +37,15 @@ const defaultValue = {
       dia: 'domingo',
       recesos: [],
     },
-  ],
+  ] as TAgendaInfoSemana[],
   fechaCreacion: Date.now,
 };
 
-const AgendaSchema = new Schema({
+// Schema de mongoose
+const AgendaSchema = new Schema<IAgendaMongoose>({
   idProfesional: { type: String, required: true, unique: true, },
-  infoSemana: [{ type: Object, required: false, default: defaultValue.infoSemana, }],
+  infoSemana: { type: [Object], required: false, default: defaultValue.infoSemana },
   fechaCreacion: { type: Date, required: false, default: defaultValue.fechaCreacion, },
 }, { versionKey: false });
 
-export const AgendaModel = model(constants.nombreStore.agenda, AgendaSchema);
+export const AgendaModel = model<IAgendaMongoose>(constants.nombreStore.agenda, AgendaSchema);

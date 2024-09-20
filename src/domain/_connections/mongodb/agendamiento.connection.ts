@@ -4,8 +4,12 @@ import {
   verificarConflictoAgendamientoOpActualizar,
   verificarConflictoAgendamientoOpGuardar
 } from './middlewares/agendamiento';
+import { IAgendamiento } from '@global/models/interfaces';
 
-// Guardar el valor por defecto de cada campo aqui
+// Definir la interfaz para el documento
+interface IAgendamientoMongoose extends Document, Omit<IAgendamiento, '_id'> {};
+
+// Guardar el valor por defecto de cada campo aqui (para los required=false)
 const defaultValue = {
   idServicioProfesional: '',
   idLocal: '',
@@ -14,7 +18,8 @@ const defaultValue = {
   fechaEliminacion: null,
 };
 
-const AgendamientoSchema = new Schema(
+// Schema de mongoose
+const AgendamientoSchema = new Schema<IAgendamientoMongoose>(
   {
     idAgenda: { type: String, require: true },
     idCliente: { type: String, required: true },
@@ -77,7 +82,7 @@ AgendamientoSchema.pre('updateMany', async function(next) {
   }
 });
 
-export const AgendamientoModel = model(
+export const AgendamientoModel = model<IAgendamientoMongoose>(
   constants.nombreStore.agendamiento,
   AgendamientoSchema
 );

@@ -1,17 +1,4 @@
-import {
-  TInfoSemanaDia,
-  // TConfigAgendaLocalEstado,
-} from '../types';
-
-// Modelo helper
-type TConfigAgendaLocalInfoSemana = {
-  dia: TInfoSemanaDia;
-  esDiaLaboral: boolean;
-  atencion: {
-    horaInicio: string;
-    horaFin: string;
-  };
-};
+import { TConfigAgendaLocalInfoSemana } from '../types';
 
 // Modelo principal
 export interface IConfigAgendaLocal {
@@ -19,7 +6,6 @@ export interface IConfigAgendaLocal {
   idAgenda: string;
   idLocal: string;
   infoSemana: TConfigAgendaLocalInfoSemana[];
-  // estado: TConfigAgendaLocalEstado;
 };
 
 export interface IConfigAgendaLocalOpcional {
@@ -27,5 +13,4 @@ export interface IConfigAgendaLocalOpcional {
   idAgenda?: string;
   idLocal?: string;
   infoSemana?: TConfigAgendaLocalInfoSemana[];
-  // estado?: TConfigAgendaLocalEstado;
 };

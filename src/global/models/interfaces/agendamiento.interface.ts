@@ -1,15 +1,8 @@
-import { TAgendamientoTipo, TAgendamientoEstado } from '@global/models/types';
-
-// Modelo helper
-type TEncuentro = {
-  tipo: 'virtual' | 'local' | 'personalizado',
-  idLocal: string | null,
-  direccion: {
-    referencia: string;
-    ubicacion: [number, number] | null;
-  } | null,
-  enlace: string | null,
-};
+import {
+  TAgendamientoTipo,
+  TAgendamientoEstado,
+  TEncuentro
+} from '@global/models/types';
 
 // Modelo principal
 export interface IAgendamiento {
