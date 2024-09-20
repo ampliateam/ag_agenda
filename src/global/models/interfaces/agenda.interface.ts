@@ -1,14 +1,4 @@
-import { TInfoSemanaDia } from '@global/models/types';
-
-// Modelo helper
-type TAgendaInfoSemana = {
-  dia: TInfoSemanaDia;
-  recesos: {
-    nota: string;
-    horaInicio: string;
-    horaFin: string;
-  }[];
-};
+import { TAgendaInfoSemana } from '@global/models/types';
 
 // Modelo principal
 export interface IAgenda {

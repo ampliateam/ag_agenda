@@ -1,6 +1,12 @@
 import { Schema, model } from 'mongoose';
 import { constants } from '@global/configs/constants';
+import { IConfigAgendaLocal } from '@global/models/interfaces';
+import { TConfigAgendaLocalInfoSemana } from '@global/models/types';
 
+// Definir la interfaz para el documento
+interface IConfigAgendaLocalMongoose extends Document, Omit<IConfigAgendaLocal, '_id'> {};
+
+// Guardar el valor por defecto de cada campo aqui (para los required=false)
 const defaultValue = {
   infoSemana: [
     {
@@ -59,15 +65,17 @@ const defaultValue = {
         horaFin: '18:00'
       },
     },
-  ],
-  estado: 'habilitado',
+  ] as TConfigAgendaLocalInfoSemana[],
 };
 
-export const ConfigAgendaLocalSchema = new Schema({
+// Schema de mongoose
+const ConfigAgendaLocalSchema = new Schema<IConfigAgendaLocalMongoose>({
   idAgenda: { type: String, required: true },
   idLocal: { type: String, required: true, unique: true },
-  infoSemana: [{ type: Object, required: false, default: defaultValue.infoSemana }],
-  // estado: { type: String, required: false, default: defaultValue.estado },
+  infoSemana: { type: [Object], required: false, default: defaultValue.infoSemana },
 }, { versionKey: false });
 
-export const ConfigAgendaLocalModel = model(constants.nombreStore.configAgendaLocal, ConfigAgendaLocalSchema);
+export const ConfigAgendaLocalModel = model<IConfigAgendaLocalMongoose>(
+  constants.nombreStore.configAgendaLocal,
+  ConfigAgendaLocalSchema
+);
