@@ -6,6 +6,10 @@ import {
 } from '../../dto';
 import { AgendamientoModel } from '@domain/_connections/mongodb';
 import { mongoToAgendamiento } from '@domain/_helpers';
+import { manejadorDeErrorMongodb } from '@domain/_errors';
+
+// Referenciar el manejador de error correspondiente
+const manejadorDeError = manejadorDeErrorMongodb;
 
 const filtroParaObtenerUnRegistro = (buscarPor: BuscarAgendamientoDTO) => {
   const filtros: any = {};
@@ -29,31 +33,43 @@ const filtroParaObtenerUnRegistro = (buscarPor: BuscarAgendamientoDTO) => {
 };
 
 export const crear = async (dto: CrearAgendamientoDTO): Promise<IAgendamiento> => {
-  const modelMongoDB = await AgendamientoModel.create(dto.agendamiento);
-  return await obtener({ _id: modelMongoDB._id.toString() });
+  try {
+    const modelMongoDB = await AgendamientoModel.create(dto.agendamiento);
+    return await obtener({ _id: modelMongoDB._id.toString() });
+  } catch (error) {
+    return manejadorDeError(error)
+  }
 };
 
 export const obtener = async (dto: BuscarAgendamientoDTO): Promise<IAgendamiento> => {
-  // Proceso de filtracion
-  const filtros = filtroParaObtenerUnRegistro(dto);
-  if (!filtros) return null;
-  
-  const modelMongoDB = await AgendamientoModel.findOne(filtros);
-  if (!modelMongoDB) return null;
-  return mongoToAgendamiento(modelMongoDB);
+  try {
+    // Proceso de filtracion
+    const filtros = filtroParaObtenerUnRegistro(dto);
+    if (!filtros) return null;
+    
+    const modelMongoDB = await AgendamientoModel.findOne(filtros);
+    if (!modelMongoDB) return null;
+    return mongoToAgendamiento(modelMongoDB);
+  } catch (error) {
+    return manejadorDeError(error)
+  }
 };
 
 export const actualizar = async (dto: ActualizarAgendamientoDTO): Promise<IAgendamiento> => {
-  // Proceso de filtracion
-  const filtros = filtroParaObtenerUnRegistro(dto.buscarPor);
-  if (!filtros) return null;
+  try {
+    // Proceso de filtracion
+    const filtros = filtroParaObtenerUnRegistro(dto.buscarPor);
+    if (!filtros) return null;
 
-  const obj = await AgendamientoModel.findOneAndUpdate(
-    filtros,
-    dto.actualizado,
-    { new: true }
-  );
+    const obj = await AgendamientoModel.findOneAndUpdate(
+      filtros,
+      dto.actualizado,
+      { new: true }
+    );
 
-  return mongoToAgendamiento(obj);
+    return mongoToAgendamiento(obj);
+  } catch (error) {
+    return manejadorDeError(error)
+  }
 };
 
