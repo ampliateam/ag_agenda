@@ -1,4 +1,4 @@
-import { TAgendaInfoSemana } from '@global/models/types';
+import { TAgendaInfoSemana } from '@global/models/ag_agenda';
 
 // Modelo principal
 export interface IAgenda {

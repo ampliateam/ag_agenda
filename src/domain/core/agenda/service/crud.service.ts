@@ -1,4 +1,4 @@
-import { IAgenda } from '@global/models/interfaces';
+import { IAgenda } from '@global/models/ag_agenda';
 import {
   CrearAgendaDTO,
   BuscarAgendaDTO,

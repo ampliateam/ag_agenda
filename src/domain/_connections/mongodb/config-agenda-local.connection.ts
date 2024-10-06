@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { constants } from '@global/configs/constants';
-import { IConfigAgendaLocal } from '@global/models/interfaces';
-import { TConfigAgendaLocalInfoSemana } from '@global/models/types';
+import { IConfigAgendaLocal, TConfigAgendaLocalInfoSemana } from '@global/models/ag_agenda';
 
 // Definir la interfaz para el documento
 interface IConfigAgendaLocalMongoose extends Document, Omit<IConfigAgendaLocal, '_id'> {};

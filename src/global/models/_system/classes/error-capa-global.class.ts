@@ -1,4 +1,4 @@
-import { IErrorCapaGlobal } from '@global/models/interfaces';
+import { IErrorCapaGlobal } from '@global/models/_system';
 
 export class ErrorCapaGlobal extends Error implements IErrorCapaGlobal {
   // Da referencia de forma general donde esta el error

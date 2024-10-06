@@ -1,4 +1,4 @@
-import { IParametroSistema } from "@global/models/interfaces";
+import { IParametroSistema } from "@global/models/ag_agenda/interfaces";
 import {
   ActualizarParametroSistemaDTO,
   BuscarParametroSistemaDTO,

@@ -1,4 +1,4 @@
-import { IErrorCapaGlobal } from '@global/models/interfaces';
+import { IErrorCapaGlobal } from '@global/models/_system';
 import { generarErrorCapaDomain } from '@domain/_errors';
 
 export const manejadorDeErrorAgendalia = (error: any) => {

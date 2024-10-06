@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { constants } from '@global/configs/constants';
-import { IAgenda } from '@global/models/interfaces';
-import { TAgendaInfoSemana } from '@global/models/types';
+import { IAgenda, TAgendaInfoSemana } from '@global/models/ag_agenda';
 
 // Definir la interfaz para el documento
 interface IAgendaMongoose extends Document, Omit<IAgenda, '_id'> {};

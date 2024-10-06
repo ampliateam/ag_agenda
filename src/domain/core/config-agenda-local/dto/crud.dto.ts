@@ -1,4 +1,4 @@
-import { IConfigAgendaLocalOpcional } from '@global/models/interfaces';
+import { IConfigAgendaLocalOpcional } from '@global/models/ag_agenda';
 
 export interface CrearConfigAgendaLocalDTO {
   configAgendaLocal: IConfigAgendaLocalOpcional;

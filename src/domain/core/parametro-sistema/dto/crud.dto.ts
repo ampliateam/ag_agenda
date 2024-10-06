@@ -1,4 +1,4 @@
-import { IParametroSistemaOpcional } from '@global/models/interfaces';
+import { IParametroSistemaOpcional } from '@global/models/ag_agenda';
 
 export interface CrearParametroSistemaDTO {
     nuevo: IParametroSistemaOpcional;

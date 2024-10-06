@@ -2,7 +2,7 @@ import {
   TAgendamientoTipo,
   TAgendamientoEstado,
   TEncuentro
-} from '@global/models/types';
+} from '@global/models/ag_agenda';
 
 // Modelo principal
 export interface IAgendamiento {

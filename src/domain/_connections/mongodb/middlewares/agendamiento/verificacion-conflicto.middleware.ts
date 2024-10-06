@@ -1,4 +1,4 @@
-import { IAgendamiento } from "@global/models/interfaces";
+import { IAgendamiento } from "@global/models/ag_agenda/interfaces";
 
 export async function verificarConflictoAgendamientoOpGuardar(ctx: any) {
   const model = ctx.model();

@@ -4,7 +4,7 @@ import {
   verificarConflictoAgendamientoOpActualizar,
   verificarConflictoAgendamientoOpGuardar
 } from './middlewares/agendamiento';
-import { IAgendamiento } from '@global/models/interfaces';
+import { IAgendamiento } from '@global/models/ag_agenda';
 
 // Definir la interfaz para el documento
 interface IAgendamientoMongoose extends Document, Omit<IAgendamiento, '_id'> {};

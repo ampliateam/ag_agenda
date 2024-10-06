@@ -1,4 +1,4 @@
-import { IConfigAgendaLocal } from '@global/models/interfaces';
+import { IConfigAgendaLocal } from '@global/models/ag_agenda';
 import {
   CrearConfigAgendaLocalDTO,
   BuscarConfigAgendaLocalDTO,

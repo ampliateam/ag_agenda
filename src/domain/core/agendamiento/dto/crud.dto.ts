@@ -1,4 +1,4 @@
-import { IAgendamientoOpcional } from '@global/models/interfaces';
+import { IAgendamientoOpcional } from '@global/models/ag_agenda';
 
 export interface CrearAgendamientoDTO {
   agendamiento: IAgendamientoOpcional;
