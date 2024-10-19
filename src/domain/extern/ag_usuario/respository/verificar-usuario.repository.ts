@@ -1,58 +1,44 @@
 import { manejadorDeErrorAgendalia } from "@domain/_errors";
-import { VerificarUsuarioPersonaDTO, VerificarUsuarioExternoDTO } from "../dto";
 import * as axios from "@domain/_connections/axios";
 import { IAutenticacionExterno, IAutenticacionPersona, IUsuario } from "@global/models/ag_usuario";
+import { ICredencialUsuario } from "@global/models/_system";
+import { formatearCredencialesHeaders } from "@domain/_helpers";
 
 // Referenciar el manejador de error correspondiente
 const manejadorDeError = manejadorDeErrorAgendalia;
 
-export const verificarUsuarioPersona = async (dto: VerificarUsuarioPersonaDTO) => {
+export const verificarUsuarioPersona = async (cu: ICredencialUsuario) => {
   try {
-    const { token } = dto;
-
+    const credencialHeaders = formatearCredencialesHeaders(cu);
     const response = await axios.ag_usuario.post('/auth/verificar-persona', {}, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { ...credencialHeaders }
     });
 
+    const ps = response.data.resultado;
     return {
-      tipo: response.data.resultado.tipo as string,
-      usuario: response.data.resultado.usuario as IUsuario,
-      persona: {
-        autenticacion: response.data.resultado.persona.autenticacion as IAutenticacionPersona,
-        token: response.data.resultado.persona.token as string,
-      }
+      cu: ps.cu as ICredencialUsuario,
+      usuario: ps.usuario as IUsuario,
+      autenticacionPersona: ps.autenticacionPersona as IAutenticacionPersona,
     };
   } catch (error) {
     return manejadorDeError(error);
   }
 };
 
-export const verificarUsuarioExterno = async (dto: VerificarUsuarioExternoDTO) => {
+export const verificarUsuarioExterno = async (cu: ICredencialUsuario) => {
   try {
-    const { publicKey, timestamp, signature } = dto;
-
+    const credencialHeaders = formatearCredencialesHeaders(cu);
     const response = await axios.ag_usuario.post('/auth/verificar-externo', {}, {
-      headers: {
-        'X-Public-Key': publicKey,
-        'X-Timestamp': timestamp,
-        'X-Signature': signature,
-      }
+      headers: { ...credencialHeaders }
     });
 
+    const ps = response.data.resultado;
     return {
-      tipo: response.data.resultado.tipo as string,
-      usuario: response.data.resultado.usuario as IUsuario,
-      externo: {
-        autenticacion: response.data.resultado.externo.autenticacion as IAutenticacionExterno,
-        identificacion: {
-          publicKey: response.data.resultado.externo.identificacion.publicKey as string,
-          timestamp: response.data.resultado.externo.identificacion.timestamp as number,
-          signature: response.data.resultado.externo.identificacion.signature as string,
-        },
-      }
+      cu: ps.cu as ICredencialUsuario,
+      usuario: ps.usuario as IUsuario,
+      autenticacionExterno: ps.autenticacionExterno as IAutenticacionExterno,
     };
   } catch (error) {
-    console.log(error);
     return manejadorDeError(error);
   }
 };

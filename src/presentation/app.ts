@@ -3,6 +3,7 @@ import cors from 'cors';
 import path from 'path';
 import 'reflect-metadata';
 
+import { conexionConMongoDB } from '@global/connections/mongodb.connection';
 import { envs } from '@global/configs/envs';
 import '@presentation/_configs/__global';
 import {
@@ -13,7 +14,7 @@ import {
 import {
   inicializacion,
   mwManejadorDeError
-} from '@presentation/middlewares';
+} from '@presentation/_middlewares';
 
 // Validacion de envs
 validarEnvs();
@@ -28,9 +29,12 @@ if (envs.environment === 'personal') {
   else dockerPortInterno = envs.dockerPortExterno;
 }
 
+// Conexion con la base de datos
+conexionConMongoDB(); 
+
 // Inicializacion de middlewares
 const app = express();
-const origin = [''];
+const origin = '*';
 app.use(cors({
   credentials: true,
   origin,

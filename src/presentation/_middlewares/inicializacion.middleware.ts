@@ -5,7 +5,10 @@ export const inicializacion = async (req: Request, res: Response, next: NextFunc
     // Construir el modelo personalizado del `Request`
     req.personalizado = {
       momentoSolicitud: new Date(),
-      presentationSolicitante: { tipo: 'desconocido' },
+      presentationSolicitante: {
+        cu: { tipo: 'desconocido' }
+      },
+      extra: {}
     };
 
     // Verificar datos provenientes del cliente
